@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel="stylesheet" href="materialize.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h4>Metadata Visualization for a Graph-Based Data Model</h4>
+      <div class="row">
+        <div class="col s8 z-depth-2">
+          <div id="viz"></div>
+        </div>
+        <div class="col s1"></div>
+        <div class="col s3 z-depth-2">
+          <div class="input-field col s12">
+            <select id="select">
+              <option value="" selected>All</option>
+              <option value="Instrument">Instrument</option>
+              <option value="Form">Form</option>
+              <option value="Derived">Derived</option>
+            </select>
+            <label>Source</label>
+          </div>
+          <p>
+            This tool can be used to visualize a proposed graphical structure
+            for a collection of variables.
+          </p>
+          <ol>
+            <li>The orange circles represent nodes in the graph.</li>
+            <li>
+              The green circles represent variables in the data dictionary.
+            </li>
+            <li>Use the mouse-wheel to scroll in and out.</li>
+            <li>
+              Hover over a circle to see a tooltip showing the name of that
+              variable/node.
+            </li>
+          </ol>
+
+          <p>
+            If you don't have a mouse-wheel, you can use the buttons below to
+            scroll in and out.
+          </p>
+
+          <div class="center">
+            <ul>
+              <li>
+                <button id="zoom-in" class="btn">+</button>
+              </li>
+
+              <div class="row"></div>
+
+              <li>
+                <button id="zoom-out" class="btn">-</button>
+              </li>
+            </ul>
+          </div>
+
+          <p>
+            This is similar to the "Dictionary Visualizer" used in Gen3.
+            However, this visualizer lets you see the number of variables in a
+            given node.
+          </p>
+        </div>
+      </div>
+
+      <script src="./materialize.min.js"></script>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          var elems = document.querySelectorAll("select");
+          var instances = M.FormSelect.init(elems);
+        });
+      </script>
+
+      <script src="data.js"></script>
+      <script src="index.js"></script>
+
+      <script>
+        const handleZoomInClick = () => {
+          svg.transition().duration(750).call(zoom.scaleBy, 1.5);
+        };
+        document
+          .getElementById("zoom-in")
+          .addEventListener("click", handleZoomInClick);
+
+        const handleZoomOutClick = () => {
+          svg.transition().duration(750).call(zoom.scaleBy, 0.5);
+        };
+        document
+          .getElementById("zoom-out")
+          .addEventListener("click", handleZoomOutClick);
+      </script>
+    </div>
+  </body>
+</html>
